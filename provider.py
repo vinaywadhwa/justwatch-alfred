@@ -36,7 +36,7 @@ class Provider:
         # result['uid'] = self.id
         result['type'] = 'default'
         result['title'] = self.title
-        result['icon'] = {"path":self.icon_url}
+        result['icon'] = {"path": self.icon_url}
         result['autocomplete'] = self.title
         # result['uid'] = self.id
         result['valid'] = True

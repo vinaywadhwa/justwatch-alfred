@@ -30,7 +30,6 @@ def show_results_providers(media_item, should_rerun):
     if len(offers) > 0:
         result = {'items': [offer.get_alfred_json(offers[offer]) for offer in
                             sorted(offers.keys(), key=lambda i: i.display_priority)]}
-        wf.logger.error("should_rerun = %s" % should_rerun)
         if should_rerun:
             result['rerun'] = 0.5
     else:
@@ -104,8 +103,8 @@ def process_thumbnails_search(t, media_items):
 def parse_title_id(title_id):
     wf.logger.error("$$$$$$$$$$" + title_id)
     split_meat = title_id.split("|")
-    content_type = split_meat[len(split_meat)-2].strip()
-    title_id = split_meat[len(split_meat)-1].strip()
+    content_type = split_meat[len(split_meat) - 2].strip()
+    title_id = split_meat[len(split_meat) - 1].strip()
     return title_id, content_type
 
 
@@ -121,7 +120,6 @@ if __name__ == '__main__':
     title_id = args.title_id
     constants.LOCALE = args.input_locale
     wf = Workflow3()
-    wf.logger.error("----------" + constants.LOCALE)
 
     just_watch = JustWatch(country=constants.LOCALE)
     providers = Providers(just_watch)
@@ -135,7 +133,6 @@ if __name__ == '__main__':
         title_id, content_type = parse_title_id(title_id)
         media_item = MediaItem(just_watch.get_title(title_id=title_id, content_type=content_type), providers)
         should_rerun = process_thumbnails_providers(t, media_item)
-        wf.logger.error("should_rerun = %s" % should_rerun)
         show_results_providers(media_item, should_rerun)
     else:
         pass

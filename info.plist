@@ -3,7 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>bundleid</key>
-	<string>com.vwap.justwatchunofficial</string>
+	<string>com.vwap.justwatch</string>
+	<key>category</key>
+	<string>Internet</string>
 	<key>connections</key>
 	<dict>
 		<key>50B0CD10-4D52-4898-9C05-DD3A34A829C3</key>
@@ -40,58 +42,9 @@
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
-	<string>Just Watch - Unofficial</string>
+	<string>JustWatch - Alfred</string>
 	<key>objects</key>
 	<array>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>alfredfiltersresults</key>
-				<false/>
-				<key>alfredfiltersresultsmatchmode</key>
-				<integer>1</integer>
-				<key>argumenttreatemptyqueryasnil</key>
-				<false/>
-				<key>argumenttrimmode</key>
-				<integer>0</integer>
-				<key>argumenttype</key>
-				<integer>0</integer>
-				<key>escaping</key>
-				<integer>127</integer>
-				<key>keyword</key>
-				<string>justwatch</string>
-				<key>queuedelaycustom</key>
-				<integer>3</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<false/>
-				<key>queuedelaymode</key>
-				<integer>1</integer>
-				<key>queuemode</key>
-				<integer>2</integer>
-				<key>runningsubtext</key>
-				<string>Searching for "{query}"</string>
-				<key>script</key>
-				<string>/usr/bin/python main.py -i $LOCALE -s {query}</string>
-				<key>scriptargtype</key>
-				<integer>0</integer>
-				<key>scriptfile</key>
-				<string>test.sh</string>
-				<key>subtext</key>
-				<string>Start typing the name of the movie/tv-show you are looking to stream..</string>
-				<key>title</key>
-				<string>Find streaming options</string>
-				<key>type</key>
-				<integer>0</integer>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>50B0CD10-4D52-4898-9C05-DD3A34A829C3</string>
-			<key>version</key>
-			<integer>3</integer>
-		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
@@ -144,6 +97,55 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>1</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>keyword</key>
+				<string>justwatch</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>1</integer>
+				<key>queuemode</key>
+				<integer>2</integer>
+				<key>runningsubtext</key>
+				<string>Searching for "{query}"</string>
+				<key>script</key>
+				<string>/usr/bin/python main.py -i $LOCALE -s {query}</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string>test.sh</string>
+				<key>subtext</key>
+				<string>Start typing the name of the movie/tv-show you are looking to stream..</string>
+				<key>title</key>
+				<string>Find streaming options</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>50B0CD10-4D52-4898-9C05-DD3A34A829C3</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>browser</key>
 				<string></string>
 				<key>spaces</key>
@@ -162,12 +164,18 @@
 		</dict>
 	</array>
 	<key>readme</key>
-	<string>Just Watch - Unofficial
+	<string>Just Watch
 Find where to stream your favourite movies and tv shows in an instant. No more logging into each of netflix, prime et al to check where a movie or tv-show is available.
 
 Based on an unofficial JustWatch API.
 
-Note: Set your locale in the workflow variable (look up your Country's ISO Code). Default locale : AU</string>
+Note: 
+- Set your locale in the workflow variable. Default locale : AU
+- Look up your Country's ISO Code here - https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
+
+Get in touch - https://twitter.com/vinayw
+
+Github - https://github.com/vinaywadhwa/Go-Home-Alfred</string>
 	<key>uidata</key>
 	<dict>
 		<key>50B0CD10-4D52-4898-9C05-DD3A34A829C3</key>
@@ -175,35 +183,37 @@ Note: Set your locale in the workflow variable (look up your Country's ISO Code)
 			<key>note</key>
 			<string>Searches for movies and tv shows for the given search keyword</string>
 			<key>xpos</key>
-			<integer>325</integer>
+			<integer>165</integer>
 			<key>ypos</key>
-			<integer>25</integer>
+			<integer>265</integer>
 		</dict>
 		<key>93C228D4-9D5E-455E-BE3C-D3A2F11827AE</key>
 		<dict>
 			<key>xpos</key>
-			<integer>800</integer>
+			<integer>640</integer>
 			<key>ypos</key>
-			<integer>25</integer>
+			<integer>265</integer>
 		</dict>
 		<key>CDA4D3B0-8923-43F1-98CE-54A463ED468B</key>
 		<dict>
 			<key>note</key>
 			<string>Shows the list of providers which offer the selected movie/tv show</string>
 			<key>xpos</key>
-			<integer>575</integer>
+			<integer>415</integer>
 			<key>ypos</key>
-			<integer>25</integer>
+			<integer>265</integer>
 		</dict>
 	</dict>
 	<key>variables</key>
 	<dict>
 		<key>LOCALE</key>
-		<string>US</string>
+		<string>AU</string>
 	</dict>
+	<key>variablesdontexport</key>
+	<array/>
 	<key>version</key>
-	<string>1.0</string>
+	<string>1.0.1</string>
 	<key>webaddress</key>
-	<string>https:/twitter.com/vinayw</string>
+	<string>https://twitter.com/vinayw</string>
 </dict>
 </plist>
