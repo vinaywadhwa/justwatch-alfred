@@ -1,6 +1,5 @@
 import argparse
 import sys
-from lib.justwatch import JustWatch
 import constants
 from media_item import MediaItem
 from workflow import Workflow3, ICON_ERROR
@@ -108,7 +107,8 @@ def parse_title_id(title_id):
     return title_id, content_type
 
 
-if __name__ == '__main__':
+def main(wf):
+    from justwatch import JustWatch
     parser = argparse.ArgumentParser()
     parser.add_argument('-s', '--search_keyword')
     parser.add_argument('-t', '--title_id')
@@ -119,7 +119,6 @@ if __name__ == '__main__':
     search_keyword = args.search_keyword
     title_id = args.title_id
     constants.LOCALE = args.input_locale
-    wf = Workflow3()
 
     just_watch = JustWatch(country=constants.LOCALE)
     providers = Providers(just_watch)
@@ -143,3 +142,8 @@ if __name__ == '__main__':
             run_in_background('generate_thumbnails',
                               ['/usr/bin/python',
                                wf.workflowfile('thumbnails.py')])
+
+
+if __name__ == '__main__':
+    wf = Workflow3(libraries=['./lib'])
+    sys.exit(wf.run(main))
