@@ -23,7 +23,7 @@ P.S.: You need to [buy the Powerpack](https://buy.alfredapp.com/) to use this wo
 - Set your [Country Code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2?oldformat=true) in the workflow variables.
 - Default country code/locale : AU
 
-..and that's it. Use the default keyboard shortcuts or setup your own to switch google accounts.
+..and that's it. Start discovering right away!
 
 
 ## 👬 Contribution
