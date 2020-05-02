@@ -2,7 +2,7 @@
 Alfred workflow to easily find where to stream your movies/tv-shows. Based on an unofficial Justwatch API.
 
 
-![Just Watch - Alfred | Logo](demo.gif)
+![Just Watch - Alfred | Demo](demo.gif)
 
 ## ⚛ Features
 - Find where to stream your favourite movies and tv shows in an instant. 
