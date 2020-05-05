@@ -1,5 +1,6 @@
 import json
 import pprint
+from datetime import datetime
 
 import constants
 
@@ -49,9 +50,22 @@ class MediaItem:
             urls = offer['urls']
             streaming_url = urls['standard_web']
             provider_id = offer['provider_id']
+            available_since = datetime.strptime(offer['date_created'], '%Y-%m-%d').strftime('%b %Y')
+            monetization_type = offer['monetization_type']
+            monetization_type = "%s%s" % (monetization_type[:0], monetization_type[0:].capitalize())
+            if (monetization_type != "rent" or monetization_type != "buy") \
+                    and ('retail_price' in offer and 'currency' in offer):
+                currency = offer['currency']
+                retail_price = offer['retail_price']
+                price = "%s (%s %s)" % (monetization_type, currency, retail_price)
+            else:
+                price = monetization_type
             provider = self.providers.get_provider(provider_id)
+
             if provider is not None:
-                offer_list[provider] = streaming_url
+                offer_list[provider] = {"streaming_url": streaming_url, "price": price,
+                                        "available_since": available_since}
+                # offer_list[provider] = streaming_url
         return offer_list
 
     def to_alfred_json(self):

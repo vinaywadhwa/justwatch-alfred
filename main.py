@@ -35,7 +35,7 @@ def show_results_providers(media_item, should_rerun):
 
         result = {'items': [{'title': "Nothing was found",
                              'icon': {'path': ICON_ERROR},
-                             'subtitle': "No movie/tv-show was found with that name (%s)" % constants.LOCALE,
+                             'subtitle': "No providers were found for this movie/tv-show (%s)" % constants.LOCALE,
                              'valid': False,
                              'autocomplete': ""
                              }]
@@ -145,5 +145,7 @@ def main(wf):
 
 
 if __name__ == '__main__':
-    wf = Workflow3(libraries=['./lib'])
+    wf = Workflow3(libraries=['./lib'], update_settings={'github_slug': 'vinaywadhwa/justwatch-alfred', 'frequency': 2})
+    if wf.update_available:
+        wf.start_update()
     sys.exit(wf.run(main))

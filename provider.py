@@ -31,7 +31,7 @@ class Provider:
         image_quality = "s100"
         return "%s%s" % (image_url_prefix, relative_path.format(profile=image_quality))
 
-    def get_alfred_json(self, streaming_url):
+    def get_alfred_json(self, offer_data):
         result = {}
         # result['uid'] = self.id
         result['type'] = 'default'
@@ -40,7 +40,7 @@ class Provider:
         result['autocomplete'] = self.title
         # result['uid'] = self.id
         result['valid'] = True
-        result['subtitle'] = "Available (%s) :  %s" % (constants.LOCALE, streaming_url)
-        result['arg'] = streaming_url
-        result['quicklookurl'] = streaming_url
+        result['subtitle'] = "Available (%s) :  %s | Added : %s" % (constants.LOCALE, offer_data['price'], offer_data['available_since'])
+        result['arg'] = offer_data['streaming_url']
+        result['quicklookurl'] = offer_data['streaming_url']
         return result
