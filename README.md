@@ -30,7 +30,7 @@ P.S.: You need to [buy the Powerpack](https://buy.alfredapp.com/) to use this wo
 
 - Report issues
 - Open pull request with improvements
-- Spread the word
+- If you feel compelled, I'd love if you spread the word!
 - Reach out with any feedback ![Twitter Follow](https://img.shields.io/twitter/follow/vinayw?style=social)
 
 ## 🏅 License
