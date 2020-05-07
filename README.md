@@ -13,8 +13,8 @@ Alfred workflow to easily find where to stream your movies/tv-shows. Based on an
 ## ✅ Install
 
 - Download and open the workflow file using [Alfred](https://www.alfredapp.com/).
-- Get the latest release from here : https://github.com/vinaywadhwa/justwatch-alfred/releases
-
+- Get the latest release from here : 
+[![Download Laps](https://img.shields.io/badge/download-justwatch-blue?style=for-the-badge)](https://github.com/vinaywadhwa/justwatch-alfred/releases/latest)
 
 P.S.: You need to [buy the Powerpack](https://buy.alfredapp.com/) to use this workflow.
 
