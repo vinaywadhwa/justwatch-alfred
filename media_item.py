@@ -7,6 +7,7 @@ import constants
 
 class MediaItem:
     providers = None
+    is_valid = True
     media_item_data = ''
     id = ''
     title = ''
@@ -26,7 +27,8 @@ class MediaItem:
         self.id = media_item['id']
         self.title = media_item['title']
         self.media_type = media_item['object_type']
-        self.original_release_year = media_item['original_release_year']
+        if 'original_release_year' in media_item:
+            self.original_release_year = media_item['original_release_year']
 
         if 'poster' in media_item:
             self.icon_url = self.get_image_url(media_item['poster'])
@@ -35,6 +37,9 @@ class MediaItem:
             self.offers = self.parse_offers(media_item['offers'])
         # pprint.pprint(media_item)
         # pprint.pprint(vars(self))
+
+        if len(self.offers) == 0 and self.original_release_year == '':
+            self.is_valid = False
 
     def get_image_url(self, relative_path):
         # https://images.justwatch.com/icon/430997/s100
@@ -72,7 +77,11 @@ class MediaItem:
         result = {}
         result['uid'] = self.id
         result['type'] = 'default'
-        result['title'] = "%s (%s)" % (self.title, self.original_release_year)
+        if self.original_release_year != '':
+            result['title'] = "%s (%s)" % (self.title, self.original_release_year)
+        else:
+            result['title'] = self.title
+
         result['icon'] = self.icon_url
         result['autocomplete'] = self.title
         # result['uid'] = self.id
@@ -86,6 +95,7 @@ class MediaItem:
             result['subtitle'] = "No providers available (%s)" % constants.LOCALE
             result['arg'] = None
             result['valid'] = False
+
 
         return result
 

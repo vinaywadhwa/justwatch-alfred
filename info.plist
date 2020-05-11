@@ -4,8 +4,6 @@
 <dict>
 	<key>bundleid</key>
 	<string>com.vwap.justwatch</string>
-	<key>category</key>
-	<string>Internet</string>
 	<key>connections</key>
 	<dict>
 		<key>50B0CD10-4D52-4898-9C05-DD3A34A829C3</key>
@@ -209,10 +207,8 @@ Github - https://github.com/vinaywadhwa/justwatch-alfred</string>
 		<key>LOCALE</key>
 		<string>AU</string>
 	</dict>
-	<key>variablesdontexport</key>
-	<array/>
 	<key>version</key>
-	<string>1.0.4</string>
+	<string>1.0.5</string>
 	<key>webaddress</key>
 	<string>https://twitter.com/vinayw</string>
 </dict>
