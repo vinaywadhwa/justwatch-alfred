@@ -55,7 +55,10 @@ class MediaItem:
             urls = offer['urls']
             streaming_url = urls['standard_web']
             provider_id = offer['provider_id']
-            available_since = datetime.strptime(offer['date_created'], '%Y-%m-%d').strftime('%b %Y')
+            if 'date_created' in offer:
+                available_since = datetime.strptime(offer['date_created'], '%Y-%m-%d').strftime('%b %Y')
+            else:
+                available_since = None
             monetization_type = offer['monetization_type']
             monetization_type = "%s%s" % (monetization_type[:0], monetization_type[0:].capitalize())
             if (monetization_type != "rent" or monetization_type != "buy") \

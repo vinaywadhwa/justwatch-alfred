@@ -40,7 +40,10 @@ class Provider:
         result['autocomplete'] = self.title
         # result['uid'] = self.id
         result['valid'] = True
-        result['subtitle'] = "Available (%s) :  %s | Added : %s" % (constants.LOCALE, offer_data['price'], offer_data['available_since'])
+        if 'available_since' in offer_data and offer_data['available_since'] is not None:
+            result['subtitle'] = "Available (%s) :  %s | Added : %s" % (constants.LOCALE, offer_data['price'], offer_data['available_since'])
+        else:
+            result['subtitle'] = "Available (%s) :  %s" % (constants.LOCALE, offer_data['price'])
         result['arg'] = offer_data['streaming_url']
         result['quicklookurl'] = offer_data['streaming_url']
         return result

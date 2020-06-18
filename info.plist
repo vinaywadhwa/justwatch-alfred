@@ -173,7 +173,9 @@ Note:
 
 Get in touch - https://twitter.com/vinayw
 
-Github - https://github.com/vinaywadhwa/justwatch-alfred</string>
+Github - https://github.com/vinaywadhwa/justwatch-alfred
+
+Check out the Alexa/GoogleHome version of this skill - https://vinaywadhwa.github.io/just-watch-voice/</string>
 	<key>uidata</key>
 	<dict>
 		<key>50B0CD10-4D52-4898-9C05-DD3A34A829C3</key>
@@ -207,8 +209,10 @@ Github - https://github.com/vinaywadhwa/justwatch-alfred</string>
 		<key>LOCALE</key>
 		<string>AU</string>
 	</dict>
+	<key>variablesdontexport</key>
+	<array/>
 	<key>version</key>
-	<string>1.0.5</string>
+	<string>1.0.6</string>
 	<key>webaddress</key>
 	<string>https://twitter.com/vinayw</string>
 </dict>
