@@ -14,7 +14,7 @@ Alfred workflow to easily find where to stream your movies/tv-shows. Based on an
 
 - Download and open the workflow file using [Alfred](https://www.alfredapp.com/).
 - Get the latest release from here : 
-[![Download Laps](https://img.shields.io/badge/download-justwatch-blue?style=for-the-badge)](https://github.com/vinaywadhwa/justwatch-alfred/releases/latest)
+[![Download JustWatch-Alfred](https://img.shields.io/badge/download-justwatch-blue?style=for-the-badge)](https://github.com/vinaywadhwa/justwatch-alfred/releases/latest)
 
 P.S : I also made [this](https://vinaywadhwa.github.io/just-watch-voice/) Alexa & Google Home/Assistant Voice 🗣️ App which does the same thing as this workflow but with voice, on your smart home devices and mobile phones.
 
