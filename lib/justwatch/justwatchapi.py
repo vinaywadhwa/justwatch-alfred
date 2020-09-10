@@ -2,12 +2,12 @@ from datetime import datetime
 from datetime import timedelta
 import requests
 import sys
+from lib.agent.agent import UserAgent
+
+HEADER = {'User-Agent': UserAgent().random}
 
 
-HEADER = {'User-Agent':'JustWatch Python client (github.com/dawoudt/JustWatchAPI)'}
-
-
-class JustWatch:	
+class JustWatch:
 	api_base_template = "https://apis.justwatch.com/content/{path}"
 
 	def __init__(self, country='AU', use_sessions=True, **kwargs):
@@ -20,18 +20,18 @@ class JustWatch:
 
 	def __del__(self):
 		''' Should really use context manager
-			but this should do without changing functionality. 
+			but this should do without changing functionality.
 		'''
 		if isinstance(self.requests, requests.Session):
 		    self.requests.close()
 
-		
+
 	def set_locale(self):
 		warn = '\nWARN: Unable to locale for {}! Defaulting to en_AU\n'
 		default_locale = 'en_AU'
 		path = 'locales/state'
 		api_url = self.api_base_template.format(path=path)
-		
+
 		r = self.requests.get(api_url, headers=HEADER)
 		try:
 			r.raise_for_status()
@@ -49,7 +49,7 @@ class JustWatch:
 
 		sys.stderr.write(warn.format(self.country))
 		return default_locale
-				
+
 	def search_for_item(self, query=None, **kwargs):
 
 		path = 'titles/{}/popular'.format(self.locale)
@@ -99,7 +99,7 @@ class JustWatch:
 		r.raise_for_status()   # Raises requests.exceptions.HTTPError if r.status_code != 200
 
 		return r.json()
-        
+
 	def get_genres(self):
 		path = 'genres/locale/{}'.format(self.locale)
 		api_url = self.api_base_template.format(path=path)
@@ -120,7 +120,7 @@ class JustWatch:
 		return r.json()
 
 	def search_title_id(self, query):
-		''' Returns a dictionary of titles returned 
+		''' Returns a dictionary of titles returned
 		from search and their respective ID's
 
 		>>> ...
@@ -132,7 +132,7 @@ class JustWatch:
 		results = self.search_for_item(query)
 		return {item['title']: item['id'] for item in results['items']}
 
-        
+
 	def get_season(self, season_id):
 
 		header = HEADER
@@ -207,7 +207,7 @@ class JustWatch:
 	def get_upcoming_cinema(self, weeks_offset, nationwide_cinema_releases_only=True):
 
 		header = HEADER
-		payload = { 'nationwide_cinema_releases_only': nationwide_cinema_releases_only, 
+		payload = { 'nationwide_cinema_releases_only': nationwide_cinema_releases_only,
 						'body': {} }
 		now_date = datetime.now()
 		td = timedelta(weeks=weeks_offset)
@@ -216,7 +216,7 @@ class JustWatch:
 		api_url = api_url.format(year_month_day[0], year_month_day[1], self.locale)
 
 		#this throws an error if you go too many weeks forward, so return a blank payload if we hit an error
-		try:        
+		try:
 			r = self.requests.get(api_url, params=payload, headers=header)
 
 			# Client should deal with rate-limiting. JustWatch may send a 429 Too Many Requests response.
