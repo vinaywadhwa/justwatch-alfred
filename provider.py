@@ -19,7 +19,7 @@ class Provider:
         self.short_name = provider['short_name']
         self.monetization_types = provider['monetization_types']
         self.id = provider['id']
-        self.display_priority = provider['display_priority']
+        self.display_priority = provider['priority']
         self.icon_url = self.get_image_url(provider['icon_url'])
         # pprint.pprint(provider)
         # pprint.pprint(vars(self))
