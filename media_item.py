@@ -25,8 +25,13 @@ class MediaItem:
 
     def parse(self, media_item):
         self.id = media_item['id']
-        self.title = media_item['title']
         self.media_type = media_item['object_type']
+
+        if 'title' in media_item:
+            self.title = media_item['title']
+        else:
+            self.title = media_item['full_path'].split('/')[-1].replace('-', ' ').title()
+
         if 'original_release_year' in media_item:
             self.original_release_year = media_item['original_release_year']
 
