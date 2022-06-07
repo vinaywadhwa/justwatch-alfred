@@ -21,11 +21,11 @@ import sys
 from workflow import Workflow
 from workflow.util import LockFile, atomic_writer
 
-# LOG = "/tmp/ccd.log"
-# logging.basicConfig(filename=LOG, filemode="w", level=logging.DEBUG)
-# console = logging.StreamHandler()
-# console.setLevel(logging.ERROR)
-# logging.getLogger("").addHandler(console)
+LOG = "/tmp/ccd.log"
+logging.basicConfig(filename=LOG, filemode="w", level=logging.DEBUG)
+console = logging.StreamHandler()
+console.setLevel(logging.ERROR)
+logging.getLogger("").addHandler(console)
 
 # logger = logging.getLogger(__name__)
 wf = Workflow()
@@ -70,7 +70,7 @@ class Thumbs(object):
         Returns:
             str: Path to thumbnail.
         """
-        if isinstance(img_path, unicode):
+        if isinstance(img_path, str):
             img_path = img_path.encode('utf-8')
         elif not isinstance(img_path, str):
             img_path = str(img_path)
@@ -112,7 +112,7 @@ class Thumbs(object):
 
         text = []
         for p in self._queue:
-            if isinstance(p, unicode):
+            if isinstance(p, str):
                 p = p.encode('utf-8')
             text.append(p)
             logger.info('Queued for thumbnail generation : %r', p)
@@ -122,7 +122,7 @@ class Thumbs(object):
         text = b'\n'.join(text)
         with LockFile(self._queue_path):
             with atomic_writer(self._queue_path, 'ab') as fp:
-                fp.write(b'{}\n'.format(text))
+                fp.write(text)
 
         self._queue = []
 
@@ -157,7 +157,7 @@ class Thumbs(object):
                         fp.write('')
 
     def download_image(self, img_path):
-        h = hashlib.md5(img_path).hexdigest()
+        h = hashlib.md5(img_path.encode('utf-8')).hexdigest()
         thumb_path = os.path.join(self.cachedir, u'{}.png'.format(h))
         logger.info("Download - download_path=%s" % thumb_path)
 

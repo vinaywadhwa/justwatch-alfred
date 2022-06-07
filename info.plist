@@ -4,6 +4,8 @@
 <dict>
 	<key>bundleid</key>
 	<string>com.vwap.justwatch</string>
+	<key>category</key>
+	<string>Internet</string>
 	<key>connections</key>
 	<dict>
 		<key>50B0CD10-4D52-4898-9C05-DD3A34A829C3</key>
@@ -71,7 +73,7 @@
 				<key>runningsubtext</key>
 				<string>Please wait...</string>
 				<key>script</key>
-				<string>/usr/bin/python main.py -t "{query}" -i $LOCALE</string>
+				<string>/usr/bin/python3 main.py -t "{query}" -i $LOCALE</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -120,7 +122,7 @@
 				<key>runningsubtext</key>
 				<string>Searching for "{query}"</string>
 				<key>script</key>
-				<string>/usr/bin/python main.py -i $LOCALE -s {query}</string>
+				<string>/usr/bin/python3 main.py -i $LOCALE -s {query}</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -212,7 +214,7 @@ Check out the Alexa/GoogleHome version of this skill - https://vinaywadhwa.githu
 	<key>variablesdontexport</key>
 	<array/>
 	<key>version</key>
-	<string>1.0.6</string>
+	<string>1.1.0</string>
 	<key>webaddress</key>
 	<string>https://twitter.com/vinayw</string>
 </dict>

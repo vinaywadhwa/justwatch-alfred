@@ -140,7 +140,7 @@ def main(wf):
     if t.has_queue:
         if not is_running('generate_thumbnails'):
             run_in_background('generate_thumbnails',
-                              ['/usr/bin/python',
+                              ['/usr/bin/python3',
                                wf.workflowfile('thumbnails.py')])
 
 
