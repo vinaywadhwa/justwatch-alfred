@@ -17,7 +17,7 @@ class MyAgent(object):
         use_cache_server=True,
         path=settings.DB,
         fallback=None,
-        verify_ssl=True,
+        verify_ssl=False,
         safe_attrs=tuple(),
     ):
         assert isinstance(cache, bool), \
