@@ -1,69 +1,59 @@
-# -*- coding: utf-8 -*-
-from __future__ import absolute_import, unicode_literals
-
 import random
 from threading import Lock
 
-from lib.agent import settings
-from lib.agent.errors import MyUserAgentError
-from lib.agent.log import logger
-from lib.agent.utils import load, load_cached, str_types, update
+from agent import settings
+from agent.errors import FakeUserAgentError
+from agent.log import logger
+from agent.utils import load, load_cached, str_types, update
 
 
-class MyAgent(object):
+class FakeUserAgent:
     def __init__(
         self,
-        cache=True,
-        use_cache_server=True,
-        path=settings.DB,
+        use_external_data=False,
+        cache_path=settings.DB,
         fallback=None,
-        verify_ssl=False,
+        browsers=["chrome", "edge", "internet explorer", "firefox", "safari", "opera"],
+        verify_ssl=True,
         safe_attrs=tuple(),
     ):
-        assert isinstance(cache, bool), \
-            'cache must be True or False'
+        assert isinstance(
+            use_external_data, bool
+        ), "use_external_data must be True or False"
 
-        self.cache = cache
+        self.use_external_data = use_external_data
 
-        assert isinstance(use_cache_server, bool), \
-            'use_cache_server must be True or False'
+        assert isinstance(cache_path, str_types), "cache_path must be string or unicode"
 
-        self.use_cache_server = use_cache_server
-
-        assert isinstance(path, str_types), \
-            'path must be string or unicode'
-
-        self.path = path
+        self.cache_path = cache_path
 
         if fallback is not None:
-            assert isinstance(fallback, str_types), \
-                'fallback must be string or unicode'
+            assert isinstance(fallback, str_types), "fallback must be string or unicode"
 
         self.fallback = fallback
 
-        assert isinstance(verify_ssl, bool), \
-            'verify_ssl must be True or False'
+        assert isinstance(browsers, (list, str)), "browsers must be list or string"
+
+        self.browsers = browsers
+
+        assert isinstance(verify_ssl, bool), "verify_ssl must be True or False"
 
         self.verify_ssl = verify_ssl
 
-        assert isinstance(safe_attrs, (list, set, tuple)), \
-            'safe_attrs must be list\\tuple\\set of strings or unicode'
+        assert isinstance(
+            safe_attrs, (list, set, tuple)
+        ), "safe_attrs must be list\\tuple\\set of strings or unicode"
 
         if safe_attrs:
-            str_types_safe_attrs = [
-                isinstance(attr, str_types) for attr in safe_attrs
-            ]
+            str_types_safe_attrs = [isinstance(attr, str_types) for attr in safe_attrs]
 
-            assert all(str_types_safe_attrs), \
-                'safe_attrs must be list\\tuple\\set of strings or unicode'
+            assert all(
+                str_types_safe_attrs
+            ), "safe_attrs must be list\\tuple\\set of strings or unicode"
 
         self.safe_attrs = set(safe_attrs)
 
         # initial empty data
-        self.data = {}
-        # TODO: change source file format
-        # version 0.1.4+ migration tool
-        self.data_randomize = []
         self.data_browsers = {}
 
         self.load()
@@ -71,48 +61,49 @@ class MyAgent(object):
     def load(self):
         try:
             with self.load.lock:
-                if self.cache:
-                    self.data = load_cached(
-                        self.path,
-                        use_cache_server=self.use_cache_server,
+                if self.use_external_data:
+                    # Use external resource to retrieve browser data
+                    self.data_browsers = load_cached(
+                        self.cache_path,
+                        self.browsers,
                         verify_ssl=self.verify_ssl,
                     )
                 else:
-                    self.data = load(
-                        use_cache_server=self.use_cache_server,
+                    # By default we will try to load our local file
+                    self.data_browsers = load(
+                        self.browsers,
                         verify_ssl=self.verify_ssl,
                     )
-
-                # TODO: change source file format
-                # version 0.1.4+ migration tool
-                self.data_randomize = list(self.data['randomize'].values())
-                self.data_browsers = self.data['browsers']
-        except MyUserAgentError:
+        except FakeUserAgentError:
             if self.fallback is None:
                 raise
             else:
                 logger.warning(
-                    'Error occurred during fetching data, '
-                    'but was suppressed with fallback.',
+                    "Error occurred during fetching data, "
+                    "but was suppressed with fallback.",
                 )
+
     load.lock = Lock()
 
-    def update(self, cache=None):
+    def update(self, use_external_data=None):
         with self.update.lock:
-            if cache is not None:
-                assert isinstance(cache, bool), \
-                    'cache must be True or False'
+            if use_external_data is not None:
+                assert isinstance(
+                    use_external_data, bool
+                ), "use_external_data must be True or False"
 
-                self.cache = cache
+                self.use_external_data = use_external_data
 
-            if self.cache:
+            # Update tmp cache file from external data source
+            if self.use_external_data:
                 update(
-                    self.path,
-                    use_cache_server=self.use_cache_server,
+                    self.cache_path,
+                    self.browsers,
                     verify_ssl=self.verify_ssl,
                 )
 
             self.load()
+
     update.lock = Lock()
 
     def __getitem__(self, attr):
@@ -128,23 +119,71 @@ class MyAgent(object):
 
             attr = attr.lower()
 
-            if attr == 'random':
-                browser = random.choice(self.data_randomize)
+            if attr == "random":
+                # Pick a random browser from the browsers argument list
+                browser_name = random.choice(self.browsers)
             else:
-                browser = settings.SHORTCUTS.get(attr, attr)
+                browser_name = settings.SHORTCUTS.get(attr, attr)
 
-            return random.choice(self.data_browsers[browser])
+            # Pick a random user-agent string for a specific browser
+            return random.choice(self.data_browsers[browser_name])
         except (KeyError, IndexError):
             if self.fallback is None:
-                raise MyUserAgentError('Error occurred during getting browser')  # noqa
+                raise FakeUserAgentError(
+                    f"Error occurred during getting browser: {attr}"
+                )  # noqa
             else:
                 logger.warning(
-                    'Error occurred during getting browser, '
-                    'but was suppressed with fallback.',
+                    f"Error occurred during getting browser: {attr}, "
+                    "but was suppressed with fallback.",
                 )
 
                 return self.fallback
 
+    @property
+    def chrome(self):
+        return self.__getattr__("chrome")
+
+    @property
+    def googlechrome(self):
+        return self.chrome
+
+    @property
+    def edge(self):
+        return self.__getattr__("edge")
+
+    @property
+    def ie(self):
+        return self.__getattr__("ie")
+
+    @property
+    def internetexplorer(self):
+        return self.ie
+
+    @property
+    def msie(self):
+        return self.ie
+
+    @property
+    def firefox(self):
+        return self.__getattr__("firefox")
+
+    @property
+    def ff(self):
+        return self.firefox
+
+    @property
+    def safari(self):
+        return self.__getattr__("safari")
+
+    @property
+    def opera(self):
+        return self.__getattr__("opera")
+
+    @property
+    def random(self):
+        return self.__getattr__("random")
+
 
 # common alias
-UserAgent = MyAgent
+UserAgent = FakeUserAgent
